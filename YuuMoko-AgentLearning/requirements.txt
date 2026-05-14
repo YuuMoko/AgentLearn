@@ -1,0 +1,4 @@
+openai>=1.0.0
+python-dotenv>=1.0.0
+hello-agents[all]>=0.2.7
+requests>=2.31.0
