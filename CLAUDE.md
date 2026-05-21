@@ -4,6 +4,10 @@
 
 Issues and PRDs live as markdown files under `.scratch/<feature-slug>/`. See `docs/agents/issue-tracker.md`.
 
+### Learner context
+
+Personal learning profile and roadmap. See `.scratch/`.
+
 ### Triage labels
 
 Canonical defaults: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
