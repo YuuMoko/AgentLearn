@@ -1,4 +1,10 @@
+import re
+
 from code.chapter4.ReAct import REACT_PROMPT_TEMPLATE
+
+from code.chapter4.llm_client import HelloAgentsLLM
+
+from code.chapter4.tools import ToolExecutor
 
 REACT_PROMPT_TEMPLATE = """
 请注意，你是一个有能力调用外部工具的智能助手。
@@ -21,4 +27,34 @@ History: {history}
 """
 
 class ReActAgent:
-    def __init__(self, ):
+    def __init__(self, llm_client: HelloAgentsLLM, tool_executor : ToolExecutor, mas_steps: int = 5):
+        self.llm_client = llm_client
+        self.tool_executor = tool_executor
+        self.max_steps = mas_steps
+        self.history = []
+
+
+    def run(self, question: str):
+        self.history = []
+        current_step = 0
+        while current_step < self.max_steps:
+            current_step += 1
+            print(f"\n --- 第{current_step}步 ---")
+
+            tool_desc = self.tool_executor.getAvailableTools()
+            history_str = "\n".join(self.history)
+            prompt = REACT_PROMPT_TEMPLATE.format(tools=tools_desc, question=question, history_str)
+
+            message = [{"role": "user", "content": prompt}]
+            response_text = self.llm_client.think(messages=message)
+            if not response_text:
+                print("错误：LLM未能返回有效响应。"); break
+
+            thought, action = self._parse_output(response_text)
+
+
+    def _parse_output(self, text: str):
+
+        thought_match = re.search(r"Thought:\s*(.*?)(?=\nAction:|$)", text, re.DOTALL)
+
+        action_match = re.search(r"Action")
