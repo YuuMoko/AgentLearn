@@ -31,10 +31,11 @@ def search(query: str) -> str:
             return result["knowledge_graph"]["description"]
         if "organic_results" in result and result["organic_results"]:
             # 如果没有直接答案，则返回前三个有机结果的摘要
-            snippets = [
-                f"[{i+1}] {res.get('title', '')}\n{res.get('snippet', '')}"
-                for i, res in enumerate(result["organic_results"][:3])
-            ]
+            # snippets = [
+            #     f"[{i+1}] {res.get('title', '')}\n{res.get('snippet', '')}"
+            #     for i, res in enumerate(result["organic_results"][:3])
+            # ]
+            return result
             return "\n\n".join(snippets)
     except Exception as e:
         return f"搜索时发生错误: {e}"
