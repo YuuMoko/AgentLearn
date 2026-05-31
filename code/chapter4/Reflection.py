@@ -155,7 +155,7 @@ if __name__ == '__main__':
         exit()
 
     # 2. 初始化 Reflection 智能体，设置最多迭代2轮
-    agent = ReflectionAgent(llm_client, max_iterations=2)
+    agent = ReflectionAgent(llm_client, max_iterations=100)
 
     # 3. 定义任务并运行智能体
     task = "编写一个Python函数，找出1到n之间所有的素数 (prime numbers)。"
